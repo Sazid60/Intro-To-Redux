@@ -301,7 +301,8 @@ export const { increment, decrement } = counterSlice.actions
 
 export default counterSlice.reducer;
 ```
-
+- in reducers we are writing business logic. Redux toolkit is helping us by generating actions automatically
+  
 - Now Lets dispatch the actions using event handler 
 - src -> app.tsx
 
@@ -327,6 +328,177 @@ function App() {
         <button onClick={handleIncrement}>Increment</button>
         <div>
           0
+        </div>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
+    </>
+  )
+}
+
+export default App
+
+```
+
+
+## 21-10 Use State and Fix TypeScript Errors.
+- lets access the state in component and render the component
+- src -> app.tsx
+```jsx
+import { useDispatch, useSelector } from "react-redux"
+import { decrement, increment } from "./redux/features/counter/counterSlice"
+
+function App() {
+// used for dispatching the actions 
+  const dispatch = useDispatch()
+
+  const {count} =  useSelector((state)=>state.counter)
+// This line extracts the count value from your Redux store.
+// useSelector is a hook from react-redux used to read values from the Redux store.
+// (state)=>state.counter Takes the full Redux store state and Returns only the counter slice of that state
+
+
+  const handleIncrement = () =>{
+    dispatch(increment())
+  }
+  const handleDecrement = () =>{
+    dispatch(decrement())
+  }
+
+  return (
+    <>
+      <div>
+        <h1>Counter With Redux</h1>
+        <button onClick={handleIncrement}>Increment</button>
+        <div>
+          {count}
+        </div>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
+    </>
+  )
+}
+
+export default App
+
+```
+
+- This is not type safe yet. now make it type safe 
+- Declaring the type inside store 
+- src -> redux -> store.ts
+
+```ts 
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from "./features/counter/counterSlice"
+export const store = configureStore({
+    reducer: {
+        counter: counterReducer
+    }
+})
+
+export type RootState = ReturnType<typeof store.getState>
+// a TypeScript type utility for defining the overall shape of your Redux store's state.
+// store.getState(); returns  { counter: { count: 5 }, user: { name: "Sazid" } }
+
+export type AppDispatch = typeof store.dispatch
+//it's used to get the correct type of the Redux dispatch function from your configured store.
+// store.dispatch Handles dispatching Redux actions like INCREMENT, DECREMENT
+```
+
+| Goal                                      | Use                               |
+| ----------------------------------------- | --------------------------------- |
+| "What type does this function return?"    | `ReturnType<typeof someFunction>` |
+| "What type is this variable or function?" | `typeof someThing`                |
+
+
+- lets update the ASpp.tsx now 
+
+```jsx
+import { useDispatch, useSelector } from "react-redux"
+import { decrement, increment } from "./redux/features/counter/counterSlice"
+import type { RootState } from "./redux/store"
+
+function App() {
+
+  const dispatch = useDispatch()
+
+  const {count} =  useSelector((state:RootState)=>state.counter)
+// This line extracts the count value from your Redux store.
+// useSelector is a hook from react-redux used to read values from the Redux store.
+// (state)=>state.counter Takes the full Redux store state and Returns only the counter slice of that state
+
+
+  const handleIncrement = () =>{
+    dispatch(increment())
+  }
+  const handleDecrement = () =>{
+    dispatch(decrement())
+  }
+
+  return (
+    <>
+      <div>
+        <h1>Counter With Redux</h1>
+        <button onClick={handleIncrement}>Increment</button>
+        <div>
+          {count}
+        </div>
+        <button onClick={handleDecrement}>Decrement</button>
+      </div>
+    </>
+  )
+}
+
+export default App
+
+```
+
+- This is not robust yet. lets give the power to a hook so that we do not need to writ e every time 
+- src -> redux -> hooks.ts
+```js
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "./store";
+
+
+// Typed versions of useSelector and useDispatch for TypeScript
+export const useAppSelector = useSelector.withTypes<RootState>();
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+
+// It attaches type information to useSelector or useDispatch.
+
+// It returns a new version of the hook that's fully typed using your RootState or AppDispatch.
+```
+
+- Lets update the App.tsx
+
+```tsx
+import { decrement, increment } from "./redux/features/counter/counterSlice"
+
+import { useAppDispatch, useAppSelector } from "./redux/hooks"
+
+function App() {
+
+  const dispatch = useAppDispatch()
+
+  const {count} =  useAppSelector((state)=>state.counter)
+// This line extracts the count value from your Redux store.
+// useSelector is a hook from react-redux used to read values from the Redux store.
+// (state)=>state.counter Takes the full Redux store state and Returns only the counter slice of that state
+
+
+  const handleIncrement = () =>{
+    dispatch(increment())
+  }
+  const handleDecrement = () =>{
+    dispatch(decrement())
+  }
+
+  return (
+    <>
+      <div>
+        <h1>Counter With Redux</h1>
+        <button onClick={handleIncrement}>Increment</button>
+        <div>
+          {count}
         </div>
         <button onClick={handleDecrement}>Decrement</button>
       </div>

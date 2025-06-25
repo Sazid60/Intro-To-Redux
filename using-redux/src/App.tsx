@@ -1,9 +1,16 @@
-import { useDispatch } from "react-redux"
 import { decrement, increment } from "./redux/features/counter/counterSlice"
+
+import { useAppDispatch, useAppSelector } from "./redux/hooks"
 
 function App() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+
+  const {count} =  useAppSelector((state)=>state.counter)
+// This line extracts the count value from your Redux store.
+// useSelector is a hook from react-redux used to read values from the Redux store.
+// (state)=>state.counter Takes the full Redux store state and Returns only the counter slice of that state
+
 
   const handleIncrement = () =>{
     dispatch(increment())
@@ -18,7 +25,7 @@ function App() {
         <h1>Counter With Redux</h1>
         <button onClick={handleIncrement}>Increment</button>
         <div>
-          0
+          {count}
         </div>
         <button onClick={handleDecrement}>Decrement</button>
       </div>
