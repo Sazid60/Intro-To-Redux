@@ -50,3 +50,16 @@ Let’s begin by asking the most important question:
 
   1. `Unidirectional` : State can pass in one direction. Redux brought unidirectional using flux 
 
+## 21-4 Problems with unidirectional data flow.
+- Lets discuss a problem of unidirectional
+
+![alt text](image-1.png)
+
+- Lets assume a case like we have a state in grand parent. we need to use the state in children who is under parent. we need to do `prop drilling` then pass to parent(though parents has nothing to do with the sate). then parent to children the prop is passed and used.
+- If there is scenario is like children has to change the state like do + or - , then we also have to pass the state change function from parent to children. 
+
+![alt text](image-3.png)
+
+- Suppose we have two children under a parent. from parent to children state is passed and a stet change function is there. The state change function can not be interchanged between two children. The state function needs to `state lifted` for pass to another children.
+
+ #### All these unidirectional state problem is solved by redux (because redux uses flux under the hood)
