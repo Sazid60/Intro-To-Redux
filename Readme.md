@@ -111,14 +111,15 @@ View (listens to store, re-renders)
 - The event triggers a dispatch of an Action like:
   
     ```js
-    { type: "INCREMENT", payload: { field, value } } // here payload is for the field and the value we want to add. It may not exist.  
+    { type: "INCREMENT", payload: { field, value } } 
+    // here payload is for the field and the value we want to add. It may not exist.  
     ```
 - The Reducer receives the Action via dispatch and updates the relevant state (e.g., count = 0 → 1) based on the `INCREMENT` type given inside dispatch.
 - Reducer is holding the business logics. 
 - The Store holds the new state, and the View re-renders to reflect the updated value.
 - This state can also include complex nested objects like:
 
-    ```json
+    ```js
     fb = { posts: [...], events: [...], messages: [...] }
     ```
 
@@ -185,3 +186,48 @@ dispatch({ type: "ADD_TODO", payload: { text: "Buy milk" } });
 | **Action**     | A plain object created and sent to the **Dispatcher**                    | A plain object **directly dispatched** to the **Reducer**               |
 | **Dispatcher** | A central hub that forwards the action to registered **Store callbacks** | ❌ **Does not exist**                                                    |
 | **dispatch()** | Part of the **Dispatcher**, sends the Action to Stores                   | A function from Redux store that sends an **Action** to the **Reducer** |
+
+
+## 21-7 Set Up a Redux Store.
+- First Install Redux. We need `Redux Wrapper` and `Redux Toolkit`
+  1. Install Redux toolkit 
+   
+   ```js
+   npm install @reduxjs/toolkit
+   ```
+  2. Install Redux Toolkit 
+   
+   ```js
+   npm install react-redux
+   ```
+- Create a Folder named `redux` inside `src`
+- create file inside `redux` named `store.ts`
+- Then make a store 
+- Without reducer we can not create store so we must pass a reducer
+- src -> redux -> store.ts
+```ts
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+    reducer: {}
+})
+
+```
+- We must wrap the app with the redux provider like a wrapper. 
+- src -> main.tsx
+```ts 
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+import { Provider } from 'react-redux'
+import { store } from './redux/store.ts'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>,
+)
+```
