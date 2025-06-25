@@ -63,3 +63,18 @@ Let’s begin by asking the most important question:
 - Suppose we have two children under a parent. from parent to children state is passed and a stet change function is there. The state change function can not be interchanged between two children. The state function needs to `state lifted` for pass to another children.
 
  #### All these unidirectional state problem is solved by redux (because redux uses flux under the hood)
+
+
+ ## 21-5 Flux architecture in simple terms.
+ - Inside Fux Architecture there will be a `store`. all the data will be stored inside the store. 
+ - From the store the data will be going to view. 
+ - View can be multiple. each are a component of react. 
+ - Data generated inside view need to stored inside view if we want to use in other views. but we can not directly store it because its unidirectional. 
+ - The unidirectional problem is solved by generating `Action`. which will help us to store the data inside `store`.
+ - Action(plain object) is like a request like bro i want to do this work. 
+ - Action uses `dispatcher` for doing this. dispatcher holds the callbacks for performing actions like registry. 
+ - Dispatcher sees the `request` of action and according to the action `type` dispatcher stores info to the store. 
+ - From `Actions` the info comes to `dispatcher` and stored the info inside store. 
+ - Unidirectional flow is maintained overall. 
+
+![alt text](image-4.png)
