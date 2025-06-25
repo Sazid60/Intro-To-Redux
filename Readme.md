@@ -37,3 +37,29 @@ Let’s begin by asking the most important question:
 - with redux tool kit we get `RTK Query`. Which is used for data fetching. In redux legacy it `Redux Thunk` was used for data fetching
 
 ## 21-3 State, Bi-directional, and uni-directional data flow.
+
+#### What is state?
+- Its present state. 
+- Each user action generates a state. 
+- Storing the states methods are different.
+- State is a piece of information 
+- State Communication can be of two types in an application 
+  1. `Bidirectional` : State can flow from one component to another or from the passed component to previous component. Handling multiple component link becomes tough can create infinity loop. This is why unidirectional is best. 
+
+  ![alt text](image.png)
+
+  1. `Unidirectional` : State can pass in one direction. Redux brought unidirectional using flux 
+
+## 21-4 Problems with unidirectional data flow.
+- Lets discuss a problem of unidirectional
+
+![alt text](image-1.png)
+
+- Lets assume a case like we have a state in grand parent. we need to use the state in children who is under parent. we need to do `prop drilling` then pass to parent(though parents has nothing to do with the sate). then parent to children the prop is passed and used.
+- If there is scenario is like children has to change the state like do + or - , then we also have to pass the state change function from parent to children. 
+
+![alt text](image-3.png)
+
+- Suppose we have two children under a parent. from parent to children state is passed and a stet change function is there. The state change function can not be interchanged between two children. The state function needs to `state lifted` for pass to another children.
+
+ #### All these unidirectional state problem is solved by redux (because redux uses flux under the hood)
