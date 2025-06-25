@@ -24,3 +24,14 @@ Let’s begin by asking the most important question:
 - we can use zustand, mobx, rxjs, redux, etc we can use.
 - Redux is ruling the industry and can generate value fast. 
 
+## 21-2 What Will You Learn?  
+- Redux is not just for react.
+- Redux can be used with any js library
+
+#### Redux made a package named `React-Redux`
+- This is made only for react. combined with wrappers
+
+#### We will basically learn `redux tool kit`
+- Legacy redux (old one) did not had `action` and `reduce`. we had to create it by our own.Old Redux was unopinionated 
+- Whether redux tool kit is opinionated (used for local state)
+- with redux tool kit we get `RTK Query`. Which is used for data fetching. In redux legacy it `Redux Thunk` was used for data fetching
