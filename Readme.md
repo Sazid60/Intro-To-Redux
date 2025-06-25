@@ -46,7 +46,7 @@ Let’s begin by asking the most important question:
 - State Communication can be of two types in an application 
   1. `Bidirectional` : State can flow from one component to another or from the passed component to previous component. Handling multiple component link becomes tough can create infinity loop. This is why unidirectional is best. 
 
-  ![alt text](image.png)
+  ![alt text](image-5.png)
 
   1. `Unidirectional` : State can pass in one direction. Redux brought unidirectional using flux 
 
@@ -78,3 +78,5 @@ Let’s begin by asking the most important question:
  - Unidirectional flow is maintained overall. 
 
 ![alt text](image-4.png)
+
+## 21-6 Inner workings of redux.
