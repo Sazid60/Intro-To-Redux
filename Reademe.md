@@ -24,4 +24,3 @@ Let’s begin by asking the most important question:
 - we can use zustand, mobx, rxjs, redux, etc we can use.
 - Redux is ruling the industry and can generate value fast. 
 
-## 21-2 What Will You Learn?  
